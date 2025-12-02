@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Theme from "./Theme";
+import MobileNavigation from "./MobileNavigation";
 
 const Navbar = () => {
   return (
@@ -14,10 +15,9 @@ const Navbar = () => {
       <div>
         <p>Global Search</p>
       </div>
-      <div>
-        <p>
-          <Theme />
-        </p>
+      <div className="flex gap-2">
+        <Theme />
+        <MobileNavigation />
       </div>
     </nav>
   );
