@@ -31,5 +31,7 @@
     "**/node_modules": true,
     "**/next-env.d.ts": true
     // "**/Thumbs.db": true
-  }
+  },
+  "editor.wordWrap": "on",
+  "cSpell.words": ["Devicon"]
 }

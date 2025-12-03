@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import NavbarLinks from "./NavbarLinks";
+import NavbarLinks from "./navbar/NavbarLinks";
 import Link from "next/link";
 import ROUTES from "@/constants/routes";
 import Image from "next/image";
