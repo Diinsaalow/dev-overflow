@@ -33,6 +33,13 @@ const RootLayout = async ({
   const session = await auth();
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
+        />
+      </head>
       <body className={`${inter.className} ${grotestk_space.variable} antialiased`}>
         <SessionProvider session={session}>
           <ThemeProvider defaultTheme="light" enableSystem attribute="class" disableTransitionOnChange>
