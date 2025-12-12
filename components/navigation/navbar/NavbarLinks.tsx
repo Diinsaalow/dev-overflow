@@ -11,7 +11,6 @@ const NavbarLinks = ({ isMobileNav = false }: { isMobileNav?: boolean }) => {
   const pathname = usePathname();
   const userId = 1;
 
-  console.log("The route ", pathname);
   return (
     <>
       {sidebarLinks.map((item) => {

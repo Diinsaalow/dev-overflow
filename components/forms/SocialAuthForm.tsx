@@ -12,8 +12,7 @@ const SocialAuthForm = () => {
         callbackUrl: ROUTES.HOME,
       });
     } catch (error) {
-      toast.error("Error Occured");
-      console.log(error);
+      toast.error("Error occurred while logging in");
     }
   };
 
