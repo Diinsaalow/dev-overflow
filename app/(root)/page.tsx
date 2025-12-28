@@ -1,3 +1,4 @@
+import QuestionCard from "@/components/cards/QuestionCard";
 import HomeFilter from "@/components/filters/HomeFilter";
 import LocalSearch from "@/components/search/LocalSearch";
 import { Button } from "@/components/ui/button";
@@ -9,10 +10,15 @@ const questions = [
     _id: "1",
     title: "What is the best way to learn React?",
     description: "I want to learn React, but I don't know where to start.",
-    tags: ["react", "javascript", "next.js"],
+    tags: [
+      { _id: "5", name: "sql" },
+      { _id: "4", name: "mongodb" },
+    ],
     author: {
       _id: "1",
       name: "John Doe",
+      image:
+        "https://img.freepik.com/free-vector/smiling-young-man-illustration_1308-174669.jpg?semt=ais_hybrid&w=740&q=80",
     },
     createdAt: new Date(),
     upvotes: 100,
@@ -23,10 +29,16 @@ const questions = [
     _id: "2",
     title: "What is the best way to learn JavaScript?",
     description: "I want to learn React, but I don't know where to start.",
-    tags: ["react", "javascript", "next.js"],
+    tags: [
+      { _id: "5", name: "sql" },
+      { _id: "4", name: "mongodb" },
+      { _id: "2", name: "postgres" },
+    ],
     author: {
       _id: "1",
       name: "John Doe",
+      image:
+        "https://img.freepik.com/free-vector/smiling-young-man-illustration_1308-174669.jpg?semt=ais_hybrid&w=740&q=80",
     },
     createdAt: new Date(),
     upvotes: 100,
@@ -37,10 +49,16 @@ const questions = [
     _id: "3",
     title: "What is the best way to learn Node.js?",
     description: "I want to learn React, but I don't know where to start.",
-    tags: ["react", "javascript", "next.js"],
+    tags: [
+      { _id: "5", name: "sql" },
+      { _id: "4", name: "mongodb" },
+      { _id: "2", name: "nodejs" },
+    ],
     author: {
       _id: "1",
       name: "John Doe",
+      image:
+        "https://img.freepik.com/free-vector/smiling-young-man-illustration_1308-174669.jpg?semt=ais_hybrid&w=740&q=80",
     },
     createdAt: new Date(),
     upvotes: 100,
@@ -51,10 +69,16 @@ const questions = [
     _id: "4",
     title: "What is the best way to learn MongoDB?",
     description: "I want to learn React, but I don't know where to start.",
-    tags: ["react", "javascript", "next.js"],
+    tags: [
+      { _id: "5", name: "sql" },
+      { _id: "4", name: "mongodb" },
+      { _id: "2", name: "javascript" },
+    ],
     author: {
       _id: "1",
       name: "John Doe",
+      image:
+        "https://img.freepik.com/free-vector/smiling-young-man-illustration_1308-174669.jpg?semt=ais_hybrid&w=740&q=80",
     },
     createdAt: new Date(),
     upvotes: 100,
@@ -65,10 +89,17 @@ const questions = [
     _id: "5",
     title: "What is the best way to learn Express?",
     description: "I want to learn React, but I don't know where to start.",
-    tags: ["react", "javascript", "next.js"],
+    // tags: { _id: "5", name: "sql" },
+    tags: [
+      { _id: "5", name: "sql" },
+      { _id: "4", name: "mongodb" },
+      { _id: "2", name: "javascript" },
+    ],
     author: {
       _id: "1",
       name: "John Doe",
+      image:
+        "https://img.freepik.com/free-vector/smiling-young-man-illustration_1308-174669.jpg?semt=ais_hybrid&w=740&q=80",
     },
     createdAt: new Date(),
     upvotes: 100,
@@ -103,7 +134,7 @@ const Home = async ({ searchParams }: SearchParamsProps) => {
 
       <section className="mt-10 flex flex-col gap-6">
         {filteredQuestions.map((question) => (
-          <h1 key={question._id}>{question.title}</h1>
+          <QuestionCard key={question._id} question={question} />
         ))}
       </section>
     </>
