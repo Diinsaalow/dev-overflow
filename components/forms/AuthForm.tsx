@@ -13,7 +13,7 @@ import ROUTES from "@/constants/routes";
 interface AuthFormProps<T extends FieldValues> {
   formType: "SIGN_IN" | "SIGN_UP";
   schema: ZodType<T>;
-  defaultValues: T;
+  defaultValues: T; 
   onSubmit: (data: T) => Promise<{ success: boolean }>;
 }
 
