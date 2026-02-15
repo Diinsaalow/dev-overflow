@@ -2,12 +2,22 @@
 import { AskQuestionSchema } from "@/lib/validations";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from "../ui/form";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import React, { useRef } from "react";
+import { MDXEditorMethods } from "@mdxeditor/editor";
+import dynamic from "next/dynamic";
+import { z } from "zod";
+import TagCard from "../cards/TagCard";
+
+const Editor = dynamic(() => import("@/components/editor/Editor"), {
+  ssr: false,
+});
 
 const AskQuestionForm = () => {
-  const form = useForm({
+  const editorRef = useRef<MDXEditorMethods>(null);
+  const form = useForm<z.infer<typeof AskQuestionSchema>>({
     resolver: zodResolver(AskQuestionSchema),
     defaultValues: {
       title: "",
@@ -16,7 +26,57 @@ const AskQuestionForm = () => {
     },
   });
 
-  const handleCreateQuestion = () => {};
+  const handInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, field: { value?: string[] }) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const tagInput = e.currentTarget.value.trim();
+      const tags = field.value ?? [];
+      if (tagInput && tagInput.length < 15 && !tags.includes(tagInput)) {
+        // if (tags.length >= 3) {
+        //   form.setError("tags", {
+        //     type: "manually",
+        //     message: "Only 3 tags are allowed.",
+        //   });
+        //   e.currentTarget.value = "";
+        //   return null;
+        // } else {
+        // }
+        form.setValue("tags", [...tags, tagInput]);
+        e.currentTarget.value = "";
+        form.clearErrors("tags");
+      } else if (tagInput.length > 15) {
+        form.setError("tags", {
+          type: "manual",
+          message: "Tags cannot exceed 15 characters!",
+        });
+      } else if (tags.includes(tagInput)) {
+        form.setError("tags", {
+          type: "manual",
+          message: "Tag already exists.",
+        });
+      } else if (tags.length > 3) {
+        form.setError("tags", {
+          type: "manually",
+          message: "Only 3 tags are allowed.",
+        });
+      }
+    }
+  };
+
+  const handleTagRemove = (tag: string, field: { value?: string[] }) => {
+    const newTags = field.value?.filter((t) => t !== tag) ?? [];
+    form.setValue("tags", newTags);
+
+    if (newTags.length === 0) {
+      form.setError("tags", {
+        type: "manually",
+        message: "Tags are required",
+      });
+    }
+  };
+  const handleCreateQuestion = (data: z.infer<typeof AskQuestionSchema>) => {
+    console.log("🚀 ~ handleCreateQuestion ~ data:", data);
+  };
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleCreateQuestion)} className="flex flex-col gap-10">
@@ -37,6 +97,7 @@ const AskQuestionForm = () => {
               <FormDescription className="body-regular text-light-500 mt-2.5">
                 Be specific and imagine you&apos;re asking a question to another person.
               </FormDescription>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -49,11 +110,12 @@ const AskQuestionForm = () => {
                 Detailed explanation of your problem <span className="text-primary-500">*</span>
               </FormLabel>
               <FormControl>
-                <div>Question Editor</div>
+                <Editor value={field.value || ""} fieldChange={field.onChange} editorRef={editorRef} markdown="" />
               </FormControl>
               <FormDescription className="body-regular text-light-500 mt-2.5">
                 Introduce the problem and expand on what you&apos;ve put in the title.
               </FormDescription>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -63,21 +125,35 @@ const AskQuestionForm = () => {
           render={({ field }) => (
             <FormItem className="flex w-full flex-col">
               <FormLabel className="paragraph-semibold text-dark400_light800">
-                Question Title <span className="text-primary-500">*</span>
+                Tags<span className="text-primary-500">*</span>
               </FormLabel>
               <FormControl>
                 <div>
                   <Input
-                    {...field}
                     placeholder="Add tags..."
                     className="paragraph-regular background-light700_dark300 light-border-2 text-dark300_light700 no-focus min-h-14 border"
+                    onKeyDown={(e) => handInputKeyDown(e, field)}
                   />
-                  Tags
+                  <div className="mt-2.5 flex gap-2">
+                    {field.value?.map((tag: string) => (
+                      <TagCard
+                        key={tag}
+                        name={tag}
+                        _id={tag}
+                        compact
+                        remove
+                        isButton
+                        handleRemove={() => handleTagRemove(tag, field)}
+                      />
+                    ))}
+                  </div>
                 </div>
               </FormControl>
+
               <FormDescription className="body-regular text-light-500 mt-2.5">
                 Add up to 3 tags to describe what your question is about. You need to press enter to add a tag.
               </FormDescription>
+              <FormMessage />
             </FormItem>
           )}
         />
