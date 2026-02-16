@@ -33,5 +33,5 @@
     // "**/Thumbs.db": true
   },
   "editor.wordWrap": "on",
-  "cSpell.words": ["darkgradient", "Devicon"]
+  "cSpell.words": ["darkgradient", "Devicon", "downvotes", "upvotes"]
 }
