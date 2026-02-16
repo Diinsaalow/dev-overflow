@@ -9,6 +9,8 @@ export interface IAccount {
   providerId: string;
 }
 
+export interface IAccountDoc extends IAccount, Document {}
+
 const AccountSchema = new Schema<IAccount>(
   {
     userId: {
@@ -26,3 +28,4 @@ const AccountSchema = new Schema<IAccount>(
 );
 
 export const Account = models?.Account || model("Account", AccountSchema);
+
