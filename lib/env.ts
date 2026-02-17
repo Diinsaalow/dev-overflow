@@ -4,6 +4,7 @@ import { z } from "zod";
 export const env = createEnv({
   server: {
     DATABASE_URL: z.url(),
+    LOG_LEVEL: z.string(),
   },
 
   //   For Next.js >= 13.4.4, you only need to destructure client variables:

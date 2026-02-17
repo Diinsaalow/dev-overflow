@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { env } from "./env";
+import logger from "./logger";
 
 // Define the connection cache type
 type MongooseCache = {
@@ -30,6 +31,7 @@ if (!global.mongoose) {
 async function connectDB(): Promise<typeof mongoose> {
   // Return existing connection if available
   if (cached.conn) {
+    logger.info("Using existing mongoose connection ");
     return cached.conn;
   }
 
@@ -52,6 +54,7 @@ async function connectDB(): Promise<typeof mongoose> {
   try {
     // Wait for the connection to establish
     cached.conn = await cached.promise;
+    logger.info("Connected to MongoDB");
   } catch (error) {
     // Reset promise on error to allow retry
     cached.promise = null;
