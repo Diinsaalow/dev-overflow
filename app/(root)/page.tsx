@@ -3,6 +3,7 @@ import HomeFilter from "@/components/filters/HomeFilter";
 import LocalSearch from "@/components/search/LocalSearch";
 import { Button } from "@/components/ui/button";
 import ROUTES from "@/constants/routes";
+import { api } from "@/lib/api";
 import Link from "next/link";
 
 const questions = [
@@ -113,6 +114,8 @@ interface SearchParamsProps {
 }
 
 const Home = async ({ searchParams }: SearchParamsProps) => {
+  const result = await api.users.getAll();
+  console.log("🚀 ~ Home ~ result:", result);
   const { query = "" } = await searchParams;
 
   const filteredQuestions = questions.filter((question) => {
