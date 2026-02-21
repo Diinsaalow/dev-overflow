@@ -12,7 +12,7 @@ export interface IUser {
   reputation?: number;
 }
 
-export interface IUserDoc extends IUser, Document {}
+export interface IUserDoc extends IUser, Document { }
 
 const UserSchema = new Schema<IUser>(
   {
@@ -29,4 +29,4 @@ const UserSchema = new Schema<IUser>(
   { timestamps: true, versionKey: false }
 );
 
-export const User = models?.user || model("User", UserSchema);
+export const User = models?.User || model("User", UserSchema);
