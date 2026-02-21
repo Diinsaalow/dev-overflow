@@ -4,8 +4,7 @@ import handleError from "@/lib/handlers/error";
 import { ValidationError } from "@/lib/http-errors";
 import { UserSchema } from "@/lib/validations";
 import { APIErrorResponse } from "@/types/global";
-import { error } from "console";
-import { NextRequest, NextResponse } from "next/server";
+import {  NextResponse } from "next/server";
 
 
 

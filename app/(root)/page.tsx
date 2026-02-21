@@ -3,8 +3,6 @@ import HomeFilter from "@/components/filters/HomeFilter";
 import LocalSearch from "@/components/search/LocalSearch";
 import { Button } from "@/components/ui/button";
 import ROUTES from "@/constants/routes";
-import connectDB from "@/lib/db";
-import handleError from "@/lib/handlers/error";
 import Link from "next/link";
 
 const questions = [
@@ -114,18 +112,7 @@ interface SearchParamsProps {
   searchParams: Promise<{ [key: string]: string }>;
 }
 
-const test = async () => {
-  try {
-    await connectDB();
-  } catch (error) {
-    return handleError(error);
-    // console.log(error);
-  }
-};
-
 const Home = async ({ searchParams }: SearchParamsProps) => {
-  const result = await test();
-  console.log("🚀 ~ Home ~ result:", result);
   const { query = "" } = await searchParams;
 
   const filteredQuestions = questions.filter((question) => {

@@ -58,6 +58,7 @@ async function connectDB(): Promise<typeof mongoose> {
   } catch (error) {
     // Reset promise on error to allow retry
     cached.promise = null;
+    logger.error("Database connection error.")
     throw error;
   }
 
